@@ -7,9 +7,11 @@ export function renderPaymentSummary(){
 
     let  productPriceCents = 0;
     let shippingPriceCents = 0;
+    let productQuantity = 0;
 
     cart.forEach((cartItem) => {
         const product = getProduct(cartItem.productId);
+        productQuantity += cartItem.quantity;
         productPriceCents += product.priceCents * cartItem.quantity;
 
         const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);  
@@ -28,7 +30,7 @@ export function renderPaymentSummary(){
           </div>
 
           <div class="payment-summary-row">
-            <div>Items (3):</div>
+            <div>Items (${productQuantity}):</div>
             <div class="payment-summary-money">$${formatCurrency(productPriceCents)}</div>
           </div>
 
@@ -62,6 +64,7 @@ export function renderPaymentSummary(){
         .innerHTML = paymentSummaryHtml;
         
     
-    
+    document.querySelector('.js-product-quantity')
+    .innerHTML = productQuantity;    
     
 }
